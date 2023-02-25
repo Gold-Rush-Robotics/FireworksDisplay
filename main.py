@@ -1,84 +1,109 @@
 import pygame
-import math
 import random
+import math
 
-pygame.init()
+# Define some colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+PURPLE = (255, 0, 255)
+CYAN = (0, 255, 255)
 
-# Set display surface and background color
-WIDTH = 800
-HEIGHT = 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-background_color = (0, 0, 0)
 
-
-# Define firework particle class
+# Define the particle class
 class Particle:
-    def __init__(self, x, y, size, color, speed):
+    def __init__(self, x, y, color, angle):
         self.x = x
         self.y = y
-        self.size = size
         self.color = color
-        self.speed = speed
-        self.angle = 0
-        self.radius = 1
+        self.angle = angle
+        self.speed = random.randint(1, 5)
 
     def update(self):
-        self.x += self.radius * self.speed * math.cos(self.angle)
-        self.y += self.radius * self.speed * math.sin(self.angle)
-        self.radius += 0.05
-        self.color = (self.color[0], self.color[1], self.color[2])
+        self.x += self.speed * math.cos(math.radians(self.angle))
+        self.y -= self.speed * math.sin(math.radians(self.angle))
+        self.speed -= 0.1
 
-    def draw(self):
+    def draw(self, screen):
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), 
-self.size)
+3)
 
 
-# Define function to create a firework explosion
-def explode(x, y, color):
-    particles = []
-    particle_count = 100
-    for i in range(particle_count):
-        size = random.randint(2, 5)
-        speed = random.randint(1, 10)
-        particle = Particle(x, y, size, color, speed)
-        particle.angle = random.uniform(0, 2 * math.pi)
-        particles.append(particle)
-    return particles
+# Define the explosion class
+class Explosion:
+    def __init__(self, x, y):
+        self.particles = []
+        for i in range(100):
+            color = random.choice([RED, GREEN, BLUE, YELLOW, PURPLE, 
+CYAN])
+            angle = random.randint(0, 360)
+            self.particles.append(Particle(x, y, color, angle))
+
+    def update(self):
+        for particle in self.particles:
+            particle.update()
+
+    def draw(self, screen):
+        for particle in self.particles:
+            particle.draw(screen)
 
 
-# Create initial fireworks
-fireworks = []
-while len(fireworks) < 5:
-    x = random.randint(100, WIDTH - 100)
-    y = random.randint(100, HEIGHT - 100)
-    size = random.randint(10, 20)
-    color = [int(random.randint(0, 255)), int(random.randint(0, 255)), 
-int(random.randint(0, 255))]
-    speed = random.uniform(0.1, 1)
-    firework = Particle(x, y, size, color, speed)
-    fireworks.append(firework)
+# Define the main function
+def main():
+    # Initialize Pygame
+    pygame.init()
 
-# Define main game loop
-running = True
-clock = pygame.time.Clock()
-while running:
-    clock.tick(60)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    screen.fill(background_color)
+    # Set the dimensions of the window
+    size = (800, 600)
+    screen = pygame.display.set_mode(size)
 
-    # Draw fireworks
-    for firework in fireworks:
-        firework.draw()
-        firework.update()
-        if firework.color[2] <= 0:
-            fireworks.remove(firework)
-            particles = explode(firework.x, firework.y, firework.color)
-            for particle in particles:
-                fireworks.append(particle)
+    # Set the caption of the window
+    pygame.display.set_caption("Celebratory Fireworks")
 
-    pygame.display.flip()
+    # Set up the clock
+    clock = pygame.time.Clock()
 
-pygame.quit()
+    # Set up the list of explosions
+    explosions = []
+
+    # Set up the game loop
+    done = False
+    while not done:
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
+        # Create a new explosion
+        if random.random() < 0.02:
+            explosions.append(Explosion(random.randint(0, 800), 
+random.randint(0, 600)))
+
+        # Update the explosions
+        for explosion in explosions:
+            explosion.update()
+
+        # Draw the background
+        screen.fill(BLACK)
+
+        # Draw the explosions
+        for explosion in explosions:
+            explosion.draw(screen)
+
+        # Update the screen
+        pygame.display.flip()
+
+        # Tick the clock
+        clock.tick(60)
+
+    # Quit Pygame
+    pygame.quit()
+
+
+# Call the main function
+if __name__ == "__main__":
+    main()
 
