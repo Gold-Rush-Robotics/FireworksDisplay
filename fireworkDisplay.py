@@ -71,8 +71,8 @@ def main():
     mixer.music.play()
 
     # Set the dimensions of the window
-    size = (800, 600)
-    screen = pygame.display.set_mode(size)
+    info_object = pygame.display.Info()
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     # Set the caption of the window
     pygame.display.set_caption("Celebratory Fireworks")
@@ -98,7 +98,7 @@ def main():
 
         # Create a new explosion
         if random.random() < 0.02:
-            explosions.append(Explosion(random.randint(0, 800), random.randint(0, 600)))
+            explosions.append(Explosion(random.randint(0, info_object.current_w), random.randint(0, info_object.current_h)))
 
         # Update the explosions
         for explosion in explosions:
