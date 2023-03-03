@@ -1,6 +1,9 @@
 import pygame
 import random
 import math
+import sys
+import time
+from pygame import mixer
 
 # Define some colors
 BLACK = (0, 0, 0)
@@ -11,6 +14,15 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 PURPLE = (255, 0, 255)
 CYAN = (0, 255, 255)
+
+
+def end_game():
+    pygame.quit()
+    sys.exit()
+
+
+start_time = round(time.time())
+stop_after = start_time + 30  # 30 seconds
 
 
 # Define the particle class
@@ -53,6 +65,10 @@ class Explosion:
 def main():
     # Initialize Pygame
     pygame.init()
+    mixer.init()
+    mixer.music.load("fireworks.mp3")
+    mixer.music.set_volume(0.5)
+    mixer.music.play()
 
     # Set the dimensions of the window
     size = (800, 600)
@@ -71,6 +87,11 @@ def main():
     done = False
     while not done:
         # Handle events
+
+        current_time = round(time.time())
+        if current_time >= stop_after:
+            end_game()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
