@@ -28,8 +28,7 @@ class Particle:
         self.speed -= 0.1
 
     def draw(self, screen):
-        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), 
-3)
+        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), 3)
 
 
 # Define the explosion class
@@ -37,8 +36,7 @@ class Explosion:
     def __init__(self, x, y):
         self.particles = []
         for i in range(100):
-            color = random.choice([RED, GREEN, BLUE, YELLOW, PURPLE, 
-CYAN])
+            color = random.choice([RED, GREEN, BLUE, YELLOW, PURPLE, CYAN])
             angle = random.randint(0, 360)
             self.particles.append(Particle(x, y, color, angle))
 
@@ -79,8 +77,7 @@ def main():
 
         # Create a new explosion
         if random.random() < 0.02:
-            explosions.append(Explosion(random.randint(0, 800), 
-random.randint(0, 600)))
+            explosions.append(Explosion(random.randint(0, 800), random.randint(0, 600)))
 
         # Update the explosions
         for explosion in explosions:
@@ -106,4 +103,3 @@ random.randint(0, 600)))
 # Call the main function
 if __name__ == "__main__":
     main()
-
