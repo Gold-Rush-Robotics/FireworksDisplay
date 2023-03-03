@@ -16,4 +16,4 @@ GPIO.setmode(GPIO.BCM)
 while GPIO.input(pushpin):
     sleep(0.2)
 
-os.system('/usr/bin/python3 fireworkDisplay.py')
+os.system('python3 fireworkDisplay.py')
