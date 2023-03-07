@@ -23,11 +23,11 @@ def end_game():
 
 
 start_time = round(time.time())
-stop_after = start_time + 30  # 30 seconds
+stop_after = start_time + 5  # 5 seconds
 
 # GRR logo
 GRR_png = pygame.image.load("GRR_Logo.png")
-
+img_size = GRR_png.get_rect().size
 
 # Define the particle class
 class Particle:
@@ -67,20 +67,30 @@ class Explosion:
 
 # Define the main function
 def main():
+
+    pygame.init()
+
+    info_object = pygame.display.Info()
+    width = info_object.current_w
+    height = info_object.current_h
+
     global alpha
     alpha = 255
 
+    x_speed = 18
+    y_speed = 18
+    x = random.randint(1, 1)
+    y = random.randint(1, 1)
+
+
+
     # Initialize Pygame
-    pygame.init()
     mixer.init()
     mixer.music.load("fireworks.mp3")
     mixer.music.set_volume(0.5)
     mixer.music.play()
 
     # Set the dimensions of the window
-    info_object = pygame.display.Info()
-    width = info_object.current_w
-    height = info_object.current_h
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     # alpha of logo
@@ -109,7 +119,7 @@ def main():
                 done = True
 
         # Create a new explosion
-        if random.random() < 0.02:
+        if random.random() < 0.9:
             explosions.append(Explosion(random.randint(0, width), random.randint(0, height)))
 
         # Update the explosions
@@ -125,10 +135,17 @@ def main():
 
         # Update the screen
 
+        if (x + img_size[0] >= width) or (x <= 0):
+            x_speed = -x_speed
+        if (y + img_size[1] >= height) or (y <= 0):
+            y_speed = -y_speed
+        x += x_speed
+        y += y_speed
+
         GRR_png.set_alpha(alpha)
-        screen.blit(GRR_png, (round(width * 0.5) - 250, round(height * 0.9) - 500))
+        screen.blit(GRR_png, (x, y))
         # decrease opacity
-        alpha = alpha - 1
+        alpha -= 1
 
         pygame.display.flip()
 
