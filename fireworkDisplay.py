@@ -78,7 +78,7 @@ def main():
     alpha = 255
 
     x_speed = 18
-    y_speed = 18
+    y_speed = 14
     x = random.randint(1, 1)
     y = random.randint(1, 1)
 
@@ -119,7 +119,7 @@ def main():
                 done = True
 
         # Create a new explosion
-        if random.random() < 0.5:
+        if random.random() < 0.25:   # frequency of fireworks
             explosions.append(Explosion(random.randint(0, width), random.randint(0, height)))
 
         # Update the explosions
