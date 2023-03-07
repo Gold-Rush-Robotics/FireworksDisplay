@@ -34,7 +34,7 @@ while files_exist:
         files_exist = False
 
 while round(time.time()) < endTime:
-    playsound.playsound("fireworkDisplay.mp3")
+    playsound.playsound("fireworkDisplay.mp3", False)
     for text_file in text_files:
         for i in [0, 3, 6]:
             print(
