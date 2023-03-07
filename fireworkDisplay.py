@@ -1,7 +1,7 @@
 import time
 import os
 import sys
-from playsound import playsound
+import playsound
 
 
 cols = os.system('tput cols')
@@ -37,7 +37,7 @@ while files_exist:
         files_exist = False
 
 while round(time.time()) < endTime:
-    playsound("fireworkDisplay.mp3")
+    playsound.playsound("fireworkDisplay.mp3")
     for text_file in text_files:
         for i in [0, 3, 6]:
             print(
@@ -46,6 +46,3 @@ while round(time.time()) < endTime:
         print(text_file)
 
         time.sleep(.05)
-
-sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=rows, cols=cols))
-print(cols, rows)
