@@ -151,7 +151,6 @@ def main():
 
         # Tick the clock
         clock.tick(60)
-        print(round(clock.get_fps()))
 
     # Quit Pygame
     pygame.quit()
