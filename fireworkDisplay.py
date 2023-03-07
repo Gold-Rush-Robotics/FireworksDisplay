@@ -4,9 +4,6 @@ import sys
 import playsound
 
 
-cols = os.system('tput cols')
-rows = os.system('tput lines')
-print(cols, rows)
 sys.stdout.write("\x1b[8;{rows};{cols}t".format(rows=48, cols=80))
 
 
