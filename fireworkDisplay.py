@@ -26,7 +26,7 @@ start_time = round(time.time())
 stop_after = start_time + 5  # 5 seconds
 
 # GRR logo
-GRR_png = pygame.image.load("fireworksDisplay.png")
+GRR_png = pygame.image.load("fireworkDisplay.png")
 img_size = GRR_png.get_rect().size
 
 # Define the particle class
@@ -86,7 +86,7 @@ def main():
 
     # Initialize Pygame
     mixer.init()
-    mixer.music.load("fireworksDisplay.mp3")
+    mixer.music.load("fireworkDisplay.mp3")
     mixer.music.set_volume(0.5)
     mixer.music.play()
 
