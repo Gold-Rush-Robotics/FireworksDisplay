@@ -6,14 +6,15 @@ import time
 from pygame import mixer
 
 # Define some colors
-BLACK = (0, 0, 0)
+CLTGREEN = (0, 80, 53)
+NINERGOLD = (164, 150, 101)
 WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-YELLOW = (255, 255, 0)
-PURPLE = (255, 0, 255)
-CYAN = (0, 255, 255)
+JASPER = (241, 230, 178)
+PINEGREEN = (137, 144, 100)
+CLAYRED = (128, 47, 45)
+SKYBLUE = (0, 115, 119)
+OREBLACK = (16, 24, 32)
+BLACK = (0, 0, 0)
 
 
 def end_game():
@@ -23,6 +24,9 @@ def end_game():
 
 start_time = round(time.time())
 stop_after = start_time + 30  # 30 seconds
+
+# GRR logo
+GRR_png = pygame.image.load("GRR_Logo.png")
 
 
 # Define the particle class
@@ -48,7 +52,7 @@ class Explosion:
     def __init__(self, x, y):
         self.particles = []
         for i in range(100):
-            color = random.choice([RED, GREEN, BLUE, YELLOW, PURPLE, CYAN])
+            color = random.choice([WHITE, JASPER, PINEGREEN, CLAYRED, SKYBLUE, OREBLACK])
             angle = random.randint(0, 360)
             self.particles.append(Particle(x, y, color, angle))
 
@@ -63,6 +67,9 @@ class Explosion:
 
 # Define the main function
 def main():
+    global alpha
+    alpha = 255
+
     # Initialize Pygame
     pygame.init()
     mixer.init()
@@ -72,7 +79,12 @@ def main():
 
     # Set the dimensions of the window
     info_object = pygame.display.Info()
+    width = info_object.current_w
+    height = info_object.current_h
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+    # alpha of logo
+    GRR_png.set_alpha(alpha)
 
     # Set the caption of the window
     pygame.display.set_caption("Celebratory Fireworks")
@@ -98,7 +110,7 @@ def main():
 
         # Create a new explosion
         if random.random() < 0.02:
-            explosions.append(Explosion(random.randint(0, info_object.current_w), random.randint(0, info_object.current_h)))
+            explosions.append(Explosion(random.randint(0, width), random.randint(0, height)))
 
         # Update the explosions
         for explosion in explosions:
@@ -112,6 +124,12 @@ def main():
             explosion.draw(screen)
 
         # Update the screen
+
+        GRR_png.set_alpha(alpha)
+        screen.blit(GRR_png, (round(width * 0.5) - 250, round(height * 0.9) - 500))
+        # decrease opacity
+        alpha = alpha - 1
+
         pygame.display.flip()
 
         # Tick the clock
