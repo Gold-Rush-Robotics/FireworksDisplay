@@ -119,7 +119,7 @@ def main():
                 done = True
 
         # Create a new explosion
-        if random.random() < 0.9:
+        if random.random() < 0.5:
             explosions.append(Explosion(random.randint(0, width), random.randint(0, height)))
 
         # Update the explosions
