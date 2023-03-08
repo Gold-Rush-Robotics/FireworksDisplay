@@ -1,4 +1,3 @@
-from re import X
 import time
 import os
 import sys
@@ -20,7 +19,7 @@ with open("check.txt", "r+") as f:
         folder_name = 'fireworks'
         num_found = 0
         startTime = round(time.time())
-        endTime = startTime + 5
+        endTime = startTime + 4.9
         goldRushASCII = ["░█▀▀░█▀█░█░░░█▀▄░", "░█▀▄░█░█░█▀▀░█░█░", "░█▀▄░█▀█░█▀▄░█▀█░▀█▀░▀█▀░█▀▀░█▀▀",
                          "░█░█░█░█░█░░░█░█░", "░█▀▄░█░█░▀▀█░█▀█░", "░█▀▄░█░█░█▀▄░█░█░░█░░░█░░█░░░▀▀█",
                          "░▀▀▀░▀▀▀░▀▀▀░▀▀░░", "░▀░▀░▀▀▀░▀▀▀░▀░▀░", "░▀░▀░▀▀▀░▀▀░░▀▀▀░░▀░░▀▀▀░▀▀▀░▀▀▀"]
@@ -37,7 +36,7 @@ with open("check.txt", "r+") as f:
             else:
                 files_exist = False
 
-        while round(time.time()) < endTime:
+        while True:
             playsound.playsound("fireworkDisplay.mp3", False)
             for text_file in text_files:
                 os.system("clear")
@@ -46,11 +45,11 @@ with open("check.txt", "r+") as f:
                     print(
                         f"{bcolors.GREEN}{goldRushASCII[i]}{bcolors.ENDC} {bcolors.GOLD}{goldRushASCII[i + 1]}{bcolors.ENDC} {bcolors.GREEN}{goldRushASCII[i + 2]}{bcolors.ENDC}")
 
-                
-
-                
+                if(round(time.time()) > endTime):
+                    open("check.txt", "w")
+                    sys.exit(0)
 
                 time.sleep(.05)
 
-        open("check.txt", "w")
+        
 
